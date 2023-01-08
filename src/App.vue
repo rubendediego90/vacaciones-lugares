@@ -1,6 +1,7 @@
 <script setup>
   import { onMounted ,ref} from "vue";
   import {getGuest} from './../src/api/guest.api'
+  import HelloWorld from "./components/HelloWorld.vue";
 
   const itemsBbdd = ref([])
   const itemsFiltred = ref([])
@@ -49,5 +50,6 @@
     <label>Total:{{ itemsBbdd.length}}</label>
   </div>
   <pre>{{ itemsFiltred }}</pre>
+  <HelloWorld/>
 </template>
 
