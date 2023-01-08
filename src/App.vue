@@ -50,6 +50,5 @@
     <label>Total:{{ itemsBbdd.length}}</label>
   </div>
   <pre>{{ itemsFiltred }}</pre>
-  <HelloWorld/>
 </template>
 
