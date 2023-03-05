@@ -7,12 +7,13 @@
   const itemsFiltred = ref([])
   const filterName = ref('')
   const filterAcom = ref('')
+  const numNinios = ref(0)
+  const numAdultos = ref(0)
 
   let delayTimer;
 
   const searchNombre = () => {
       clearTimeout(delayTimer);
-      console.log()
       delayTimer = setTimeout(function() {
           itemsFiltred.value = itemsBbdd.value.filter(e => removeAccents(e.nombre).toLowerCase().includes(removeAccents(filterName.value).toLowerCase()))
       }, 500); // Will do the ajax stuff after 1000 ms, or 1 s
@@ -34,8 +35,19 @@
 
   onMounted(async()=>{
     const resp = await getGuest()
-    itemsBbdd.value=resp.data.guests
-    itemsFiltred.value=resp.data.guests
+    const guest = resp.data.guests
+    const element = []
+
+    for (let index = 0; index < guest.length; index++) {
+      if(!removeAccents(guest[index].nombre).toLowerCase().includes(removeAccents("test").toLowerCase())){
+        element.push(guest[index])
+        numAdultos.value = numAdultos.value + guest[index].numAdultos
+        numNinios.value = numNinios.value + guest[index].numNinios
+      }
+    }
+
+    itemsBbdd.value=element
+    itemsFiltred.value=element
   })
 </script>
 
@@ -48,6 +60,10 @@
   </div>
   <div >
     <label>Total:{{ itemsBbdd.length}}</label>
+    <br>
+    <label>Total menus adulto:{{ numAdultos}}</label>
+    <br>
+    <label>Total menus infantil:{{ numNinios}}</label>
   </div>
   <pre>{{ itemsFiltred }}</pre>
 </template>
